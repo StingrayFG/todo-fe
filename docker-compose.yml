@@ -3,15 +3,23 @@ services:
     image: todo-fe
     container_name: todo-fe
     restart: always
+    depends_on:
+      - todo-be
     ports:
       - 3000:3000
+    networks:
+      - todo-network
 
   todo-be:
     image: todo-be
     container_name: todo-be
     restart: always
+    depends_on:
+      - postgres
     ports:
       - 4000:4000
+    networks:
+      - todo-network
 
   postgres:
     image: postgres
@@ -21,7 +29,14 @@ services:
       - ./postgres-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=gnw7845gjhoitr
-      - POSTGRES_DB=aerobee-db
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=test
     ports:
       - 5433:5432
+    networks:
+      - todo-network
+
+networks:
+  todo-network:
+    driver: bridge
+

@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 
 
 FROM base AS deps
@@ -31,7 +31,7 @@ COPY --from=builder --chown=node:node /app/tailwind.config.js ./tailwind.config.
 
 USER node
 ENV NODE_ENV=production
-ENV REACT_APP_SERVER_URL=http://localhost:4000
+ENV REACT_APP_SERVER_URL=http://todo-be:4000
 ENV PORT=3000
 EXPOSE ${PORT}
 
