@@ -1,0 +1,27 @@
+services:
+  todo-fe:
+    image: todo-fe
+    container_name: todo-fe
+    restart: always
+    ports:
+      - 3000:3000
+
+  todo-be:
+    image: todo-be
+    container_name: todo-be
+    restart: always
+    ports:
+      - 4000:4000
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=gnw7845gjhoitr
+      - POSTGRES_DB=aerobee-db
+    ports:
+      - 5433:5432
