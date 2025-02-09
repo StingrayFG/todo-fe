@@ -45,14 +45,33 @@ export default function MainPage() {
   }
 
   const addTask = () => {
-    TaskService.handleAdd(inputValue)
+    if (inputValue) {
+      TaskService.handleAdd(inputValue)
+      .then(res => {
+        setTasks([ res, ...tasks ])
+        setInputValue('');
+      })
+      .catch(err => {
+        console.log(err)
+        alert('Could not create the task')
+      })
+    }
+  }
+
+  const updateTaskIsComplete = (task) => {
+    TaskService.handleUpdateTaskIsComplete(task.uuid, task.isComplete)
     .then(res => {
-      setTasks([ res, ...tasks ])
-      setInputValue('');
+      let newTasks = [...tasks];
+      newTasks.find(t => {
+        if (t.uuid === res.uuid) {
+          t.isComplete = res.isComplete;
+        }
+      })
+      setTasks(newTasks);
     })
     .catch(err => {
       console.log(err)
-      alert('Could not create the task')
+      alert('Could not update the task')
     })
   }
 
@@ -83,6 +102,7 @@ export default function MainPage() {
             <TaskElement 
             task={task} 
             deleteTask={deleteTask} 
+            updateTaskIsComplete={updateTaskIsComplete}
             isEven={(i % 2) === 0}/>
           )}
 

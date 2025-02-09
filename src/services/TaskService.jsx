@@ -27,6 +27,20 @@ const TaskService = {
     })
   },
 
+  handleUpdateTaskIsComplete: async (uuid, isComplete) => { 
+    return new Promise(async (resolve, reject) => {
+      const body = { uuid, isComplete };
+
+      await instance.post('task/update-is-complete', body)
+      .then(res => {
+        resolve(res.data);
+      })
+      .catch(err => {
+        reject(err);
+      });  
+    })
+  },
+
   handleDelete: async (uuid) => { 
     return new Promise(async (resolve, reject) => {
       const body = { uuid };
